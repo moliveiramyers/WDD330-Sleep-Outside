@@ -1,4 +1,4 @@
-import { setLocalStorage, getLocalStorage, getParam } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage } from "./utils.mjs";
 
 export default class ProductDetails {
     constructor(productId, dataSource) {
@@ -12,14 +12,23 @@ export default class ProductDetails {
         this.product = await this.dataSource.findProductById(this.productId);
         this.renderProductDetails();
 
-        document.querySelector("#addToCart").addEventListener("click",
+        document.getElementById("add-to-cart").addEventListener("click",
             this.addProductToCart.bind(this));
     }
 
     addProductToCart() {
         const cartItems = getLocalStorage("so-cart") || [];
-        cartItems.push(this.product);
 
+        const existingItem = cartItems.find(item => item.Id === this.product.Id);
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        }
+        else {
+            this.product.quantity = 1;
+            cartItems.push(this.product);
+        }
+        
         setLocalStorage("so-cart", cartItems);
         alert(`${this.product.Name} added to cart!`);
     }
@@ -28,22 +37,23 @@ export default class ProductDetails {
         productDetailsTemplate(this.product);
     }
 }
-    function productDetailsTemplate(product) {
-  return `<section class="product-detail"> <h3>${product.Brand.Name}</h3>
-    <h2 class="divider">${product.NameWithoutBrand}</h2>
-    <img
-      class="divider"
-      src="${product.Image}"
-      alt="${product.NameWithoutBrand}"
-    />
-    <p class="product-card__price">$${product.FinalPrice}</p>
-    <p class="product__color">${product.Colors[0].ColorName}</p>
-    <p class="product__description">
-    ${product.DescriptionHtmlSimple}
-    </p>
-    <div class="product-detail__add">
-      <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
-    </div></section>`;
+function productDetailsTemplate(product) {
+    document.querySelector("h2").textContent = product.Category.charAt(0).toUpperCase() + product.Category.slice(1);
+    document.querySelector("#p-brand").textContent = product.Brand.Name;
+    document.querySelector("#p-name").textContent = product.NameWithoutBrand;
+
+    const productImage = document.querySelector("#p-image");
+    productImage.src = product.Images.PrimaryExtraLarge;
+    productImage.alt = product.NameWithoutBrand;
+    const euroPrice = new Intl.NumberFormat('de-DE',
+        {
+            style: 'currency', currency: 'EUR',
+        }).format(Number(product.FinalPrice) * 0.85);
+    document.querySelector("#p-price").textContent = `${euroPrice}`;
+    document.querySelector("#p-color").textContent = product.Colors[0].ColorName;
+    document.querySelector("#p-description").innerHTML = product.DescriptionHtmlSimple;
+
+    document.getElementById("add-to-cart").dataset.id = product.Id;
 }
 
 

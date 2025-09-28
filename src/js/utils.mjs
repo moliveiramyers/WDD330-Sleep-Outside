@@ -54,7 +54,7 @@ export function renderWithTemplate(template, parentElement, data, callback) {
   }
 }
 
-export async function loadTemplate(path) {
+async function loadTemplate(path) {
   const response = await fetch(path);
   const template = await response.text();
   return template;
@@ -71,4 +71,19 @@ export async function loadHeaderFooter() {
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTamplate, footerElement);
 
+  cartCount();
+
+}
+
+export function cartCount() {
+  const cartItems = getLocalStorage("so-cart") || [];
+  const count = cartItems.reduce((total, item) => {
+    return total + (item.quantity || 1); 
+  }, 0);
+
+  const countElement = document.getElementById("cart-count");
+  if (countElement) {
+    countElement.textContent = count;
+  }
+  
 }

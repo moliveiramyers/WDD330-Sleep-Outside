@@ -125,7 +125,27 @@ button {
 
 .cart svg {
   width: 25px;
+  z-index: 2;
 }
+
+
+#cart-count {
+  position: absolute;
+  top: 5px;
+  right: -6px;
+  background-color: #e63946;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  min-width: 18px;
+  text-align: center;
+  line-height: 1.2;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
 
 .cart:hover svg {
   fill: gray;
@@ -149,6 +169,30 @@ button {
   margin: 0 auto;
   width: 50%;
   text-align: center;
+}
+
+.product-grid{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  list-style-type: none;
+  padding-left: 0;
+  text-align: center;
+}
+
+.product-grid li{
+  padding: 1rem;
+}
+
+.product-grid a{
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--font-base);
+  color: var(--dark-grey);
+}
+
+.product-grid a:hover{
+  color: grey;
 }
 
 .products {
