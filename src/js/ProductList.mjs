@@ -20,7 +20,9 @@ export default class ProductList {
     }
 
     async init() {
+        console.log("Search term in ProductList:", this.category);
         const list = await this.dataSource.getData(this.category);
+        console.log("List fetched:", list);
         this.renderList(list);
         document.querySelector(".title").textContent = this.category;
     }

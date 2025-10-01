@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, loadHeaderFooter, cartCount } from "./utils.mjs";
 
 loadHeaderFooter();
 
@@ -14,6 +14,7 @@ function renderCartContents() {
     document.querySelector(".list-total").innerHTML = `$${total.toFixed(2)}`;
   }
   addRemoveListeners();
+
 }
 
 function cartItemTemplate(item) {
@@ -54,7 +55,7 @@ function addRemoveListeners() {
 
 function removeFromCart(productId){
   let cartItems = getLocalStorage("so-cart");
-  const itemIndex = cartItems.findIndex((item) = item.Id === productId);
+  const itemIndex = cartItems.findIndex((item) => item.Id === productId);
 
   if (itemIndex > -1) {
     if (cartItems[itemIndex].quantity > 1) {
@@ -64,6 +65,7 @@ function removeFromCart(productId){
       cartItems.splice(itemIndex, 1);
     }
   }
-localStorage.setItem("so-cart", JSON.stringify(cartItems));  renderCartContents();
+  setLocalStorage("so-cart", cartItems)
+  renderCartContents();
 }
 renderCartContents();

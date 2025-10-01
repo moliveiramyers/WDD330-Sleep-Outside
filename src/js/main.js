@@ -1,4 +1,10 @@
-import { loadHeaderFooter } from "./utils.mjs";
+import { loadHeaderFooter, } from "./utils.mjs";
+import { initSearch } from "./search.mjs";
 
-loadHeaderFooter();
 
+document.addEventListener("DOMContentLoaded", async () => {
+  console.log("DOM loaded...");
+  await loadHeaderFooter();
+  console.log("header/footer loaded...");
+  initSearch();
+});
