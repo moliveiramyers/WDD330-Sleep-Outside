@@ -1,3 +1,5 @@
+import { initSearch } from "./search.mjs";
+
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
@@ -7,7 +9,7 @@ export function qs(selector, parent = document) {
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
+  return JSON.parse(localStorage.getItem(key)) || [];
 }
 // save data to local storage
 export function setLocalStorage(key, data) {
@@ -72,6 +74,7 @@ export async function loadHeaderFooter() {
   renderWithTemplate(footerTamplate, footerElement);
 
   cartCount();
+  // initSearch();
 
 }
 
@@ -82,7 +85,11 @@ export function cartCount() {
   }, 0);
 
   const countElement = document.getElementById("cart-count");
-  if (countElement) {
+  if (!count) {
+    countElement.style.display = "none";
+  }
+  else {
+    countElement.style.display = "inline-block";
     countElement.textContent = count;
   }
   
