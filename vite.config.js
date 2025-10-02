@@ -13,17 +13,9 @@ export default defineConfig({
         checkout: resolve(__dirname, "src/checkout/index.html"),
         product: resolve(
           __dirname,
-          "src/product_pages/index.html",
-        // ),
-        // product2: resolve(__dirname, "src/product_pages/marmot-ajax-3.html"),
-        // product3: resolve(
-        //   __dirname,
-        //   "src/product_pages/northface-alpine-3.html",
-        // ),
-        // product4: resolve(
-        //   __dirname,
-        //   "src/product_pages/northface-talus-4.html",
-        ),
+          "src/product_pages/index.html"),
+        product_listing: resolve(__dirname, "src/product_listing/index.html")
+      
       },
     },
   },
