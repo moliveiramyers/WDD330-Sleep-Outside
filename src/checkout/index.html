@@ -51,24 +51,17 @@
         </div>
       </fieldset>
 
-      <fieldset>
-        <legend>Payment</legend>
-
-        <div class="checkout__payment">
-          <label>
-            Card Number
-            <input type="text" name="cardNumber" id="cardNumber" required />
-          </label>
-          <label>
-            Expiration
-            <input type="text" name="exp" id="exp" required />
-          </label>
-          <label>
-            CVV
-            <input type="text" name="cvv" id="cvv" required />
-          </label>
-        </div>
-      </fieldset>
+<fieldset>
+          <legend>Payment</legend>
+          <div class="checkout__payment">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" name="cardNumber" id="cardNumber" required>
+            <label for="expiration">Expiration</label>
+            <input type="text" name="expiration" id="expiration" required>
+            <label for="code">CVV</label>
+            <input type="text" name="code" id="code" required>
+          </div>
+        </fieldset>
 
       <fieldset class="checkout-summary">
         <legend>Order Summary</legend>
