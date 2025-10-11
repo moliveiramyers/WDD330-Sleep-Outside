@@ -10,23 +10,39 @@ function convertToJson(res) {
 
 export default class ProductData {
   constructor() {
-    // this.category = category;
-    // this.path = `../public/json/${this.category}.json`;
   }
  async getData(query) {
-    // return fetch(this.path)
-    //   .then(convertToJson)
-   //   .then((data) => data);
    const response = await fetch(`${baseURL}products/search/${query}`);
    console.log("Fetching:", `${baseURL}products/search/${query}`);
    const data = await convertToJson(response);
    console.log("Response JSON:", data);
    return data.Result;
   }
+
+
+
   async findProductById(id) {
     const response = await fetch(`${baseURL}product/${id}`);
     const data = await convertToJson(response);
     console.log(data.Result);
     return data.Result;
   }
+}
+export async function getAllProducts() {
+  const categories = ["backpacks", "sleeping-bags", "tents"];
+  let allProducts = [];
+
+  for (const category of categories) {
+    try {
+      const response = await fetch(`../public/json/${category}.json`);
+      const data = await response.json();
+      allProducts = allProducts.concat(
+        data.Result.map(p => ({ ...p, Category: category }))
+      );
+    } catch (err) {
+      console.error(`Error loading ${category}:`, err);
+    }
+  }
+
+  return allProducts;
 }
