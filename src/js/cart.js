@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, loadHeaderFooter, cartCount } from "./utils.mjs";
 
 loadHeaderFooter();
 
@@ -14,6 +14,7 @@ function renderCartContents() {
     document.querySelector(".list-total").innerHTML = `$${total.toFixed(2)}`;
   }
   addRemoveListeners();
+  cartCount();
 
 }
 

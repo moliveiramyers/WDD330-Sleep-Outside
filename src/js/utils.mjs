@@ -47,9 +47,6 @@ export function renderListWithTemplate(template, parentElement, list, position =
 }
 
 export function renderWithTemplate(template, parentElement, data, callback) {
-  // const htmlStrings = list.map(template)
-  // if (clear) { this.listElement.innerHTML = ""; };
-  // parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
   parentElement.innerHTML = template;
   if (callback) {
     callback(data);
@@ -92,5 +89,8 @@ export function cartCount() {
     countElement.style.display = "inline-block";
     countElement.textContent = count;
   }
-  
+    // Trigger animation
+    countElement.classList.remove("animate"); 
+    void countElement.offsetWidth; 
+    countElement.classList.add("animate");
 }

@@ -8,24 +8,33 @@ function convertToJson(res) {
   }
 }
 
-export default class ProductData {
+export default class ExternalServices {
   constructor() {
   }
- async getData(query) {
-   const response = await fetch(`${baseURL}products/search/${query}`);
-   console.log("Fetching:", `${baseURL}products/search/${query}`);
-   const data = await convertToJson(response);
-   console.log("Response JSON:", data);
-   return data.Result;
+  async getData(query) {
+    const response = await fetch(`${baseURL}products/search/${query}`);
+    console.log("Fetching:", `${baseURL}products/search/${query}`);
+    const data = await convertToJson(response);
+    console.log("Response JSON:", data);
+    return data.Result;
   }
-
-
 
   async findProductById(id) {
     const response = await fetch(`${baseURL}product/${id}`);
     const data = await convertToJson(response);
-    console.log(data.Result);
+    // console.log(data.Result);
     return data.Result;
+  }
+
+  async checkout(payload) {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    };
+    return await fetch(`${baseURL}checkout/`, options).then(covertToJson);
   }
 }
 export async function getAllProducts() {
