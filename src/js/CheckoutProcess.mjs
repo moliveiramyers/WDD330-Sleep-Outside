@@ -80,25 +80,58 @@ export default class CheckoutProcess {
 
     // Handle checkout submission
     async checkout(form) {
-        const orderData = this.formDataToJSON(form);
-
-        // Add order metadata
-        orderData.orderDate = new Date().toISOString();
-        orderData.items = this.packageItems(this.list);
-        orderData.orderTotal = this.orderTotal.toFixed(2);
-        orderData.tax = this.tax.toFixed(2);
-        orderData.shipping = this.shipping.toFixed(2);
-
         try {
+            const orderData = this.formDataToJSON(form);
+            orderData.street = orderData.address;
+            delete orderData.address;
+            console.log("Payload being sent to server:", orderData);
+
+            orderData.orderDate = new Date().toISOString();
+            orderData.items = this.packageItems(this.list);
+            this.calculateItemSubTotal();
+            this.calculateOrderTotal();
+            orderData.orderTotal = this.orderTotal.toFixed(2);
+            orderData.tax = this.tax.toFixed(2);
+            orderData.shipping = this.shipping.toFixed(2);
+
+            const btn = document.getElementById("checkoutSubmit");
+            if (btn) btn.disabled = true;
+
             const service = new ExternalServices();
+            console.log("Payload being sent to server:", orderData);
+
             const response = await service.checkout(orderData);
             alert("✅ Order placed successfully!");
+
+            const successPayload = {
+                id: response.orderId ?? response.id ?? Math.floor(Math.random() * 1000000),
+                orderTotal: orderData.orderTotal,
+                tax: orderData.tax,
+                shipping: orderData.shipping,
+                items: orderData.items,
+                totalQuantity: orderData.items.reduce((s, i) => s + (i.quantity || 1), 0)
+            };
+
+            sessionStorage.setItem("so-order-success", JSON.stringify(successPayload));
+
             localStorage.removeItem(this.key);
             form.reset();
-            window.location.href = "/confirmation.html";
+            window.location.href = "/checkout/success.html";
+
         } catch (err) {
             console.error("Checkout error:", err);
-            alert("❌ There was a problem submitting your order. Please try again.");
+
+            const btn = document.getElementById("checkoutSubmit");
+            if (btn) btn.disabled = false;
+
+
+            if (err && err.message) {
+                const msg = typeof err.message === "object" ? (err.message.message || JSON.stringify(err.message)) : err.message;
+                alert("Checkout failed: " + msg);
+            } else {
+                alert("There was a problem submitting your order. Please try again.");
+            }
+
         }
     }
 }
