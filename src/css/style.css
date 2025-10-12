@@ -523,3 +523,75 @@ input.error {
     grid-template-columns: 1fr;
   }
 }
+
+/* -------- SUCCESS PAGE --------- */
+
+main.success-page {
+  max-width: 700px;
+  margin: 5rem auto;
+  padding: 2.5rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+main.success-page h2 {
+  font-family: var(--font-headline);
+  color: var(--secondary-color);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+}
+
+/* Success message box */
+#success-message {
+  background: white;
+  border: 6px solid var(--light-grey);
+  border-radius: 0.6rem;
+  padding: 1.5rem;
+  text-align: left;
+  margin-bottom: 2rem;
+  box-shadow: #303030;
+}
+
+#success-message p {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+#success-message ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 1rem;
+}
+
+#success-message li {
+  background: #fff7ec;
+  border-radius: 0.4rem;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.4rem;
+}
+
+/* Buttons */
+a.button {
+  display: inline-block;
+  margin: 0.5rem;
+  background: var(--secondary-color);
+  color: white;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.4rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+a.button:hover {
+  background: var(--tertiary-color);
+  transform: scale(1.05);
+}
+
+/* Optional: add emoji for success */
+main.success-page h2::before {
+  content: "✅ ";
+}
